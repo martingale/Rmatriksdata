@@ -41,27 +41,6 @@ matriksSymbols <- function (exchange_id=NULL,market=NULL,state=NULL){
   temp <- fromJSON(content(req,"text"))
   temp <- temp[,c('symbolCode','symbolId','deleted','description','exchangeId','fraction','marketCode')]
   return(temp)
-  # temp<-unlist(strsplit(temp,'"'))
-  #
-  # symbol<-temp[2+which(temp=="symbol")]
-  #
-  # id<-temp[1+which(temp=="id")]
-  # id<-as.numeric(substr(id,2,nchar(id)-1))
-  #
-  # active<-temp[1+which(temp=="active")]
-  # active<-substr(active,2,nchar(active)-1)
-  #
-  # description<-temp[2+which(temp=="description")]
-  #
-  # exchange_id<-temp[1+which(temp=="exchange_id")]
-  # exchange_id<-as.numeric(substr(exchange_id,2,nchar(exchange_id)-1))
-  #
-  # fraction<-temp[1+which(temp=="fraction")]
-  # fraction<-as.numeric(substr(fraction,2,nchar(fraction)-1))
-  #
-  # market_code<-temp[2+which(temp=="market_code")]
-  #
-  # return(data.frame(symbol,id,active,description,exchange_id,fraction,market_code))
 }
 
 #' Fetch Exchanges
@@ -88,18 +67,6 @@ matriksExchanges <- function (){
 
   temp <- fromJSON(content(req,"text"))
   return(temp)
-  # temp<-content(req,"text")
-  # temp<-unlist(strsplit(temp,'"'))
-  #
-  # id<-temp[1+which(temp=="id")]
-  # id<-as.numeric(substr(id,2,nchar(id)-1))
-  #
-  # code<-temp[2+which(temp=="code")]
-  # code<-substr(code,2,nchar(code)-1)
-  #
-  # description<-temp[2+which(temp=="description")]
-  #
-  # return(data.frame(id,code,description))
 }
 
 #' Fetch Markets
@@ -125,14 +92,6 @@ matriksMarkets <- function (){
   }
   temp <- fromJSON(content(req,"text"))
   return(temp)
-  # temp<-content(req,"text")
-  # temp<-unlist(strsplit(temp,'"'))
-  #
-  # market_code<-temp[2+which(temp=="market_code")]
-  #
-  # description<-temp[2+which(temp=="description")]
-  #
-  # return(data.frame(market_code,description))
 }
 
 #' Fetch Futures and Options Markets
@@ -159,15 +118,4 @@ matriksMarketsViop <- function (){
 
   temp <- fromJSON(content(req,"text"))
   return(temp)
-  # temp<-content(req,"text")
-  # temp<-unlist(strsplit(temp,'"'))
-  #
-  # market_code<-temp[2+which(temp=="market_code")]
-  #
-  # description<-temp[2+which(temp=="description")]
-  #
-  # market_id<-unlist(strsplit(temp[1+which(temp=="market_id")],"}")[])
-  # market_id<-as.numeric(substr(market_id,2,nchar(market_id)))
-
-  return(data.frame(market_code,description,market_id))
 }

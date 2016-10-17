@@ -112,9 +112,7 @@ matriksData<-function(ticker, dataType, startDate, endDate=NULL, period=NULL) {
 
   if(nrow(tmp)==0) {
     warning("The time range of the data may be public holiday and/or it may be future dates and/or there is no Matriks data available corresponding to time range chosen.")
-
   }
   tmp
-
 }
 

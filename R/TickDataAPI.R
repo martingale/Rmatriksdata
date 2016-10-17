@@ -8,7 +8,6 @@
 #' @param period A character value is used with bar datatype to analyze data in different time segments.One of "\code{1min}","\code{5min}","\code{1hour}" and "\code{1day}".
 #' @return A data frame object is returned in "\code{trade}","\code{bestbidoffer}","\code{depth}","\code{openinterest}" and "\code{bar}" dataTypes.
 #' @seealso \code{\link{trade}}, \code{\link{bestbidoffer}}, \code{\link{depth}}, \code{\link{openinterest}}, \code{\link{bar}}
-
 getData<-function(dateRange,symbol,type,period=NULL,...){
   auth<-suppressWarnings(tryCatch(strsplit(readBin("~/matriks/.tkn","character"),",")[[1]][2],
                                   error=function(e) {auth<-getToken()}))
@@ -71,7 +70,6 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
   }
 }
 
-
 #' Fetch Trade Data
 #'
 #' Fetches trade data from historical data service.
@@ -80,7 +78,6 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
 #' @param dateRange A character vector of length two  \code{c("YYYY-MM-DD","YYYY-MM-DD")}.
 #' @return A data frame object is returned that contains bid or ask,trade id, price quantity and signal time columns.
 #' @seealso \code{\link{bestbidoffer}}, \code{\link{depth}}, \code{\link{openinterest}}, \code{\link{bar}}.
-
 trade <- function (dateRange,symbol){
   meta<-getData(dateRange,symbol,"trade")
   meta[,5]<-as.numeric(meta[,5])
@@ -92,10 +89,6 @@ trade <- function (dateRange,symbol){
 
   meta[,1]<-as.POSIXct((as.numeric(meta[,1])*1000+unlist(tableDuration))/1000,origin="1970-01-01 00:00:00",tz = "GMT")
 
-  #   meta[meta[,3]=="b",3]<-0
-  #   meta[meta[,3]=="a",3]<-1
-  #   meta[,3]<-as.numeric(meta[,3])
-  #   meta<-xts(meta[,-c(1,2)],order.by = meta[,1])
   closeAllConnections()
   return(meta)
 }
@@ -124,8 +117,6 @@ bestbidoffer <- function (dateRange,symbol){
   meta[,1]<-as.POSIXct((as.numeric(meta[,1])*1000+unlist(tableDuration))/1000,origin="1970-01-01 00:00:00",tz = "GMT")
   colnames(meta) <- c("timestamp","symbol","best_bid_price","best_bid_size","best_ask_price","best_ask_price")
 
-
-  # meta<-xts(meta[,-c(1,2)],order.by = meta[,1])
   closeAllConnections()
   return(meta)
 }
@@ -151,11 +142,9 @@ depth <- function (dateRange,symbol){
 
   meta[,1]<-as.POSIXct((as.numeric(meta[,1])*1000+unlist(tableDuration))/1000,origin="1970-01-01 00:00:00",tz = "GMT")
 
-  # meta<-xts(meta[,-c(1,2)],order.by = meta[,1]
   closeAllConnections()
   return(meta[,-2])
 }
-
 
 #' Fetch Openinterest Data
 #'
@@ -208,7 +197,7 @@ openinterest <- function (dateRange,symbol){
 
   meta[,1]<-as.POSIXct((as.numeric(meta[,1])*1000+unlist(tableDuration))/1000,origin="1970-01-01 00:00:00",tz = "GMT")
   Sys.setenv(TZ = "GMT")
-  # meta<-xts(meta[,-c(1,2)],order.by = meta[,1])
+
   colnames(meta) <- "Open Positions"
   closeAllConnections()
   return(meta)
@@ -223,7 +212,6 @@ openinterest <- function (dateRange,symbol){
 #' @param period A character value is used with bar datatype to analyze data in different time segments.One of "\code{1min}","\code{5min}","\code{1hour}" and "\code{1day}".
 #' @return A data frame object is returned that contains open,high,low,close,quantity and weighted average price columns.
 #' @seealso \code{\link{trade}}, \code{\link{bestbidoffer}}, \code{\link{depth}}, \code{\link{openinterest}}.
-
 bar <- function (dateRange,symbol,period){
   meta<-getData(dateRange,symbol,"bar",period)
   date <- as.POSIXlt(meta$time/1000,tz = "GMT",origin = "1970-01-01")
