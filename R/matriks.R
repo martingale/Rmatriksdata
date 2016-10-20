@@ -5,6 +5,7 @@
 #' @return The  token is returned.
 #' @export
 getToken<-function(){
+  require(base64enc)
   authCond <- F
   while(!authCond){
     dir.create("~/matriks",showWarnings = F)
@@ -72,12 +73,15 @@ getToken<-function(){
 #' ##NOT RUN
 #' @export
 matriksData<-function(ticker, dataType, startDate, endDate=NULL, period=NULL) {
+  require(base64enc)
+
   if(is.null(endDate)){
     endDate <- startDate
   }
-  if(dataType=="bar" && (is.null(period)) || !any(c('1min','5min','1hour','1day')==period)) {
-    stop("Please choose period time one of the followings: '1min','5min','1hour' or '1day'")
-
+  if(dataType=="bar"){
+    if((is.null(period)) | !any(c('1min','5min','1hour','1day',NULL)==period)){
+      stop("Please choose period time one of the followings: '1min','5min','1hour' or '1day'")
+    }
   }
   startDate <- as.Date(startDate)
   endDate <- as.Date(endDate)

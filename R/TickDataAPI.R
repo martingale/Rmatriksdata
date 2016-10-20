@@ -11,6 +11,8 @@
 getData<-function(dateRange,symbol,type,period=NULL,...){
   auth<-suppressWarnings(tryCatch(strsplit(readBin("~/matriks/.tkn","character"),",")[[1]][2],
                                   error=function(e) {auth<-getToken()}))
+  require(httr, jsonlite)
+
   attemptCount <- 10
   startdate <- dateRange[1]
   enddate <- dateRange[2]
