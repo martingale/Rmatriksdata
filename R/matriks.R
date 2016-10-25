@@ -4,8 +4,8 @@
 #'
 #' @return The  token is returned.
 #' @export
+#' @import base64enc
 getToken<-function(){
-  require(base64enc)
   authCond <- F
   while(!authCond){
     dir.create("~/matriks",showWarnings = F)
