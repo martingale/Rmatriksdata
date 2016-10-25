@@ -44,8 +44,8 @@ Although, as of now, Matriks Data Services can provide with historical data sinc
 }
 \examples{
 ##NOT RUN
-matriksData("GARAN","bar","2016-01-22","2016-01-23","1hour")
-matriksData("GARAN","trade","2016-01-22","2016-01-23")
+# matriksData("GARAN","bar","2016-01-22","2016-01-23","1hour")
+# matriksData("GARAN","trade","2016-01-22","2016-01-23")
 ##NOT RUN
 }
 \seealso{

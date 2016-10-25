@@ -68,8 +68,8 @@ getToken<-function(){
 #' @note Although, as of now, Matriks Data Services can provide with historical data since the year 2013, the data coverage is more likely to expand in time.
 #' @seealso \code{\link{trade}}, \code{\link{bestbidoffer}}, \code{\link{depth}}, \code{\link{openinterest}}, \code{\link{bar}}
 #' @examples ##NOT RUN
-#' matriksData("GARAN","bar","2016-01-22","2016-01-23","1hour")
-#' matriksData("GARAN","trade","2016-01-22","2016-01-23")
+#' # matriksData("GARAN","bar","2016-01-22","2016-01-23","1hour")
+#' # matriksData("GARAN","trade","2016-01-22","2016-01-23")
 #' ##NOT RUN
 #' @export
 matriksData<-function(ticker, dataType, startDate, endDate=NULL, period=NULL) {
