@@ -8,12 +8,14 @@
 #' @param period A character value is used with bar datatype to analyze data in different time segments.One of "\code{1min}","\code{5min}","\code{1hour}" and "\code{1day}".
 #' @return A data frame object is returned in "\code{trade}","\code{bestbidoffer}","\code{depth}","\code{openinterest}" and "\code{bar}" dataTypes.
 #' @seealso \code{\link{trade}}, \code{\link{bestbidoffer}}, \code{\link{depth}}, \code{\link{openinterest}}, \code{\link{bar}}
+#' @import httr
+#' @importFrom jsonlite fromJSON
 getData<-function(dateRange,symbol,type,period=NULL,...){
   auth<-suppressWarnings(tryCatch(strsplit(readBin("~/matriks/.tkn","character"),",")[[1]][2],
                                   error=function(e) {auth<-getToken()}))
 
-  require(httr)
-  require(jsonlite)
+  # require(httr)
+  # require(jsonlite)
 
   attemptCount <- 10
   startdate <- dateRange[1]

@@ -10,6 +10,8 @@
 #' @return A data.frame is returned that  contains symbols on Matriks.
 #' @seealso \code{\link{matriksExchanges}},\code{\link{matriksMarkets}}, \code{\link{matriksMarketsViop}}
 #' @export
+#' @import httr
+#' @importFrom jsonlite fromJSON
 matriksSymbols <- function (exchange_id=NULL,market=NULL,state=NULL){
 
   auth<-suppressWarnings(tryCatch(strsplit(readBin("~/matriks/.tkn","character"),",")[[1]][2],
@@ -52,6 +54,8 @@ matriksSymbols <- function (exchange_id=NULL,market=NULL,state=NULL){
 #' All of exchanges on Matriks, is returned.There is not any classification.
 #' @seealso  \code{\link{matriksSymbols}},\code{\link{matriksMarkets}}, \code{\link{matriksMarketsViop}}
 #' @export
+#' @import httr
+#' @importFrom jsonlite fromJSON
 matriksExchanges <- function (){
 
   auth<-suppressWarnings(tryCatch(strsplit(readBin("~/matriks/.tkn","character"),",")[[1]][2],
@@ -78,6 +82,8 @@ matriksExchanges <- function (){
 #' All of markets on Matriks, is returned.There is not any classification.
 #'@seealso \code{\link{matriksSymbols}},\code{\link{matriksExchanges}}, \code{\link{matriksMarketsViop}}
 #'@export
+#' @import httr
+#' @importFrom jsonlite fromJSON
 matriksMarkets <- function (){
 
   auth<-suppressWarnings(tryCatch(strsplit(readBin("~/matriks/.tkn","character"),",")[[1]][2],
@@ -103,6 +109,8 @@ matriksMarkets <- function (){
 #' All of futures and options markets on Matriks, is returned.There is not any classification.
 #' @seealso \code{\link{matriksSymbols}},\code{\link{matriksExchange}},\code{\link{matriksMarkets}}
 #' @export
+#' @import httr
+#' @importFrom jsonlite fromJSON
 matriksMarketsViop <- function (){
 
   auth<-suppressWarnings(tryCatch(strsplit(readBin("~/matriks/.tkn","character"),",")[[1]][2],
