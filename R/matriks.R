@@ -73,8 +73,6 @@ getToken<-function(){
 #' ##NOT RUN
 #' @export
 matriksData<-function(ticker, dataType, startDate, endDate=NULL, period=NULL) {
-  require(base64enc)
-
   if(is.null(endDate)){
     endDate <- startDate
   }
