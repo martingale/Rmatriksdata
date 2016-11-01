@@ -27,10 +27,10 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
 
   if(type=="bar"){
     path <- paste(zipbegin,startdate,enddate,zipend,period,sep="_")
-    urlhead <- paste("http://web1.matriksdata.com/dumrul-api/v1/tick/",type,".gz?",sep = "")
+    urlhead <- paste("http://web1.matriksdata.com/dumrul-api/v2/tick/",type,".gz?",sep = "")
   }else{
     path <- paste(zipbegin,startdate,enddate,zipend,sep="_")
-    urlhead <- paste("http://web1.matriksdata.com/dumrul-api/v1/tick/",type,".zip?",sep = "")
+    urlhead <- paste("http://web1.matriksdata.com/dumrul-api/v2/tick/",type,".zip?",sep = "")
   }
 
   start <- paste("start=",startdate,sep="")
