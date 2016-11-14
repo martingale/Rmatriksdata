@@ -20,7 +20,7 @@ getToken<-function(){
     }
     reqH <- add_headers(Authorize = paste("Basic",up), dummy = "D")
     names(reqH$headers)[2] <- "X-Client-Type"
-    req <- GET("http://web1.matriksdata.com/v1/login", reqH)
+    req <- GET("http://api.matriksdata.com/login", reqH)
     if(req$status_code==401){
       stop("Matriks login service status: 401")
     }
@@ -93,8 +93,8 @@ matriksData<-function(ticker, dataType, startDate, endDate=NULL, period=NULL) {
     warning("endDate and startDate values are swapped because endDate is earlier than startDate")
   }
   dateRange <- c(startDate,endDate)
-  if(!(endDate-startDate)<7){
-    dateRange<-seq(startDate,endDate,by="weeks")
+  if(!(endDate-startDate)<1){ # 7
+    dateRange<-seq(startDate,endDate,by="days") # weeks
     if(!dateRange[length(dateRange)]==endDate){
       dateRange <- c(dateRange,endDate)
     }

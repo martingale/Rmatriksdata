@@ -14,6 +14,11 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
   auth<-suppressWarnings(tryCatch(strsplit(readBin("~/matriks/.tkn","character"),",")[[1]][2],
                                   error=function(e) {auth<-getToken()}))
 
+  discoSeviceURL <- "api.matriksdata.com/disco.json"
+
+  # disco <- fromJSON(content(GET(discoSeviceURL),as = "text"))
+  # disco$rest$bar
+
   # require(httr)
   # require(jsonlite)
 
@@ -27,10 +32,10 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
 
   if(type=="bar"){
     path <- paste(zipbegin,startdate,enddate,zipend,period,sep="_")
-    urlhead <- paste("http://web1.matriksdata.com/dumrul-api/v2/tick/",type,".gz?",sep = "")
+    urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,".gz?",sep = "")
   }else{
     path <- paste(zipbegin,startdate,enddate,zipend,sep="_")
-    urlhead <- paste("http://web1.matriksdata.com/dumrul-api/v2/tick/",type,".zip?",sep = "")
+    urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,"?",sep = "")
   }
 
   start <- paste("start=",startdate,sep="")
@@ -69,9 +74,10 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
   if(type == "bar"){
     return(fromJSON(content(req,as = "text")))
   }else{
-    writeBin(content(req, "raw"), paste(pathHead,path,".zip",sep = ""))
-    meta <- read.csv2(unz(paste(pathHead,path,".zip",sep=""), paste(path,".csv",sep = "")), header=TRUE ,sep=";",as.is = T)
-    file.remove(paste(pathHead,path,".zip",sep=""))
+    # writeBin(content(req, "raw"), paste(pathHead,path,".zip",sep = ""))
+    # meta <- read.csv2(unz(paste(pathHead,path,".zip",sep=""), paste(path,".csv",sep = "")), header=TRUE ,sep=";",as.is = T)
+    # file.remove(paste(pathHead,path,".zip",sep=""))
+    meta <- read.table(text=content(req,as = "text"),sep = ",",header = T,as.is = T)
     return(meta)
   }
 }
@@ -88,14 +94,14 @@ trade <- function (dateRange,symbol){
   meta<-getData(dateRange,symbol,"trade")
   meta[,5]<-as.numeric(meta[,5])
 
-  meta[,1]<-as.POSIXct(strftime(sub("T"," ",strtrim(meta[,1],width = 19)),"%Y-%m-%d %H:%M:%S",tz = "GMT"),tz = "GMT")
-  tableIndex<-table(meta[,1])
+  meta[,2]<-as.POSIXct(strftime(sub("T"," ",strtrim(meta[,2],width = 19)),"%Y-%m-%d %H:%M:%S",tz = "UTC"),tz = "UTC")
+  tableIndex<-table(meta[,2])
 
   tableDuration<-sapply(tableIndex,function(x)cumsum(rep(1000/x,x))-1000/x)
 
-  meta[,1]<-as.POSIXct((as.numeric(meta[,1])*1000+unlist(tableDuration))/1000,origin="1970-01-01 00:00:00",tz = "GMT")
+  meta[,2]<-as.POSIXct((as.numeric(meta[,2])*1000+unlist(tableDuration))/1000,origin="1970-01-01 00:00:00",tz = "UTC")
 
-  closeAllConnections()
+  # closeAllConnections()
   return(meta)
 }
 
@@ -173,7 +179,7 @@ openinterest <- function (dateRange,symbol){
   pathHead<-"~/matriks/data/"
   path <-paste(zipbegin,startdate,enddate,zipend,sep="_")
 
-  urlhead <- "https://web1.matriksdata.com/dumrul-api/v1/tick/openinterest.zip?"
+  urlhead <- "https://apitest.matriksdata.com/dumrul-api/v1/tick/openinterest.zip?"
 
   start <- paste("start=",startdate,sep="")
   end <- paste("end=",enddate,sep="")
