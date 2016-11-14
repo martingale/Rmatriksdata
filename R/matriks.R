@@ -94,7 +94,7 @@ matriksData<-function(ticker, dataType, startDate, endDate=NULL, period=NULL) {
   }
   dateRange <- c(startDate,endDate)
   if(!(endDate-startDate)<1){ # 7
-    dateRange<-seq(startDate,endDate,by="days") # weeks
+    dateRange<-seq(startDate,endDate,by="weeks") # weeks
     if(!dateRange[length(dateRange)]==endDate){
       dateRange <- c(dateRange,endDate)
     }
