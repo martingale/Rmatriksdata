@@ -94,7 +94,7 @@ matriksData<-function(ticker, dataType, startDate, endDate=NULL, period=NULL) {
   }
   dateRange <- c(startDate,endDate)
   if(!(endDate-startDate)<1){ # 7
-    dateRange<-seq(startDate,endDate,by="days") # weeks
+    dateRange<-seq(startDate,endDate,by="weeks") # weeks
     if(!dateRange[length(dateRange)]==endDate){
       dateRange <- c(dateRange,endDate)
     }
@@ -103,7 +103,7 @@ matriksData<-function(ticker, dataType, startDate, endDate=NULL, period=NULL) {
 
   tmp<-lapply(1:(length(dateRange)-1),FUN = function(x){
     if(dataType=="bar"){
-      temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1]),symbol = ticker,period=period))
+      temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1]-1),symbol = ticker,period=period))
     }else{
       temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1]),symbol = ticker))
     }
