@@ -72,7 +72,7 @@ getToken<-function(){
 #' # matriksData("GARAN","trade","2016-01-22","2016-01-23")
 #' ##NOT RUN
 #' @export
-matriksData<-function(ticker, dataType, startDate, endDate=NULL, period=NULL) {
+matriksData<-function(ticker, dataType, startDate, endDate=Sys.Date(), period=NULL) {
   if(is.null(endDate)){
     endDate <- startDate
   }
@@ -83,7 +83,7 @@ matriksData<-function(ticker, dataType, startDate, endDate=NULL, period=NULL) {
   }
   startDate <- as.Date(startDate)
   endDate <- as.Date(endDate)
-  if(dataType!="bar") endDate <- endDate + 1
+  if(dataType!="bar") endDate <- endDate + 1; startDate <- startDate - 1
 
   if(endDate<startDate) {
 
@@ -103,7 +103,7 @@ matriksData<-function(ticker, dataType, startDate, endDate=NULL, period=NULL) {
 
   tmp<-lapply(1:(length(dateRange)-1),FUN = function(x){
     if(dataType=="bar"){
-      temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1]-1),symbol = ticker,period=period))
+      temp<-do.call(dataType,list(dateRange=c(dateRange[x] + 1,dateRange[x+1]),symbol = ticker,period=period))
     }else{
       temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1]),symbol = ticker))
     }
