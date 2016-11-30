@@ -73,7 +73,7 @@ getToken<-function(){
 #' ##NOT RUN
 #' @export
 matriksData<-function(ticker, dataType = c("trade", "bestbidoffer", "depth", "openinterest", "bar"), startDate, endDate=Sys.Date(), period=NULL) {
-  if(length(dataType) != 0) stop("Invalid dataType length")
+  if(length(dataType) != 1) stop("Invalid dataType length")
   dataType <- match.arg(dataType)
   if(is.null(endDate)){
     endDate <- startDate
