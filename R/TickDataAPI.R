@@ -35,7 +35,7 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
     urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,".gz?",sep = "")
   }else{
     path <- paste(zipbegin,startdate,enddate,zipend,sep="_")
-    urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,"?",sep = "")
+    urlhead <- paste("https://apitest.matriksdata.com/dumrul/v1/tick/",type,"?",sep = "")
   }
 
   start <- paste("start=",startdate,sep="")
@@ -148,14 +148,14 @@ depth <- function (dateRange,symbol){
 
   meta[,7]<-as.numeric(meta[,7])
 
-  meta[,1]<-as.POSIXct(strftime(sub("T"," ",strtrim(meta[,1],width = 19)),"%Y-%m-%d %H:%M:%S",tz = "GMT"),tz = "GMT")
-  tableIndex<-table(meta[,1])
+  meta[,2]<-as.POSIXct(strftime(sub("T"," ",strtrim(meta[,2],width = 19)),"%Y-%m-%d %H:%M:%S",tz = "GMT"),tz = "GMT")
+  tableIndex<-table(meta[,2])
   tableDuration<-sapply(tableIndex,function(x)cumsum(rep(1000/x,x))-1000/x)
 
-  meta[,1]<-as.POSIXct((as.numeric(meta[,1])*1000+unlist(tableDuration))/1000,origin="1970-01-01 00:00:00",tz = "GMT")
+  meta[,2]<-as.POSIXct((as.numeric(meta[,2])*1000+unlist(tableDuration))/1000,origin="1970-01-01 00:00:00",tz = "GMT")
 
   closeAllConnections()
-  return(meta[,-2])
+  return(meta[,-1])
 }
 
 #' Fetch Openinterest Data
