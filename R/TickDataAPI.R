@@ -32,11 +32,11 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
 
   if(type=="bar"){
     path <- paste(zipbegin,startdate,enddate,zipend,period,sep="_")
-    urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,".gz?",sep = "")
+    # urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,".gz?",sep = "")
+    urlhead <- "192.168.105.100:6666?"
   }else{
     path <- paste(zipbegin,startdate,enddate,zipend,sep="_")
-    # urlhead <- paste("https://apitest.matriksdata.com/dumrul/v1/tick/",type,"?",sep = "")
-    urlhead <- "192.168.105.100:6666?"
+    urlhead <- paste("https://apitest.matriksdata.com/dumrul/v1/tick/",type,"?",sep = "")
   }
 
   start <- paste("start=",startdate,sep="")
