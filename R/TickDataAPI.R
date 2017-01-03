@@ -32,11 +32,11 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
 
   if(type=="bar"){
     path <- paste(zipbegin,startdate,enddate,zipend,period,sep="_")
-    urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,".gz?",sep = "")
+    # urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,".gz?",sep = "")
+    urlhead <- "192.168.105.100:6666?"
   }else{
     path <- paste(zipbegin,startdate,enddate,zipend,sep="_")
-    # urlhead <- paste("https://apitest.matriksdata.com/dumrul/v1/tick/",type,"?",sep = "")
-    urlhead <- "192.168.105.100:6666?"
+    urlhead <- paste("https://apitest.matriksdata.com/dumrul/v1/tick/",type,"?",sep = "")
   }
 
   start <- paste("start=",startdate,sep="")
@@ -227,7 +227,12 @@ openinterest <- function (dateRange,symbol){
 #' @seealso \code{\link{trade}}, \code{\link{bestbidoffer}}, \code{\link{depth}}, \code{\link{openinterest}}.
 bar <- function (dateRange,symbol,period){
   meta<-getData(dateRange,symbol,"bar",period)
-  date <- as.POSIXlt(meta$time/1000,tz = "GMT",origin = "1970-01-01")
+  if(period=="1day")
+{
+    date <- as.Date(meta$date)
+} else{
+    date <- as.POSIXlt(meta$time/1000,tz = "GMT",origin = "1970-01-01")
+  }
   meta <- meta[-c(1:2)]
   meta <- cbind(date,meta)
   closeAllConnections()
