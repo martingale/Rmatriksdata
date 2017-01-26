@@ -19,7 +19,7 @@ matriksSymbols <- function (exchange_id=NULL,market=NULL,state=NULL){
 
 
 
-  mainurl <- "http://web1.matriksdata.com/dumrul-api/v2/meta/symbols?"
+  mainurl <- "https://api.matriksdata.com/dumrul/v2/meta/symbols?"
 
   if(!is.null(exchange_id)){
     mainurl <- paste(mainurl,"&exchange_id=",exchange_id,sep = "")
