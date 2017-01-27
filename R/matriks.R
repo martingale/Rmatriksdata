@@ -105,7 +105,7 @@ matriksData<-function(ticker, dataType = c("trade", "bestbidoffer", "depth", "op
 
   tmp<-lapply(1:(length(dateRange)-1),FUN = function(x){
     if(dataType=="bar"){
-      temp<-do.call(dataType,list(dateRange=c(dateRange[x] + 1,dateRange[x+1]),symbol = ticker,period=period))
+      temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1]),symbol = ticker,period=period))
     }else{
       temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1]),symbol = ticker))
     }
