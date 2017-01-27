@@ -122,13 +122,12 @@ bestbidoffer <- function (dateRange,symbol){
   meta[,4]<-as.numeric(meta[,4])
   meta[,5]<-as.numeric(as.character(meta[,5]))
   meta[,6]<-as.numeric(meta[,6])
+  meta[,7]<-as.numeric(meta[,7])
 
-  meta[,1]<-as.POSIXct(strftime(sub("T"," ",strtrim(meta[,1],width = 19)),"%Y-%m-%d %H:%M:%S",tz = "GMT"),tz = "GMT")
-  tableIndex<-table(meta[,1])
-  tableDuration<-sapply(tableIndex,function(x)cumsum(rep(1000/x,x))-1000/x)
+  timeStamp <- as.POSIXct(meta[,2]) + meta[,3]/1e9
 
-  meta[,1]<-as.POSIXct((as.numeric(meta[,1])*1000+unlist(tableDuration))/1000,origin="1970-01-01 00:00:00",tz = "GMT")
-  colnames(meta) <- c("timestamp","symbol","best_bid_price","best_bid_size","best_ask_price","best_ask_price")
+  meta[,2] <- timeStamp
+  meta <- meta[,-3]
 
   closeAllConnections()
   return(meta)

@@ -85,7 +85,7 @@ matriksData<-function(ticker, dataType = c("trade", "bestbidoffer", "depth", "op
   }
   startDate <- as.Date(startDate)
   endDate <- as.Date(endDate)
-  if(dataType!="bar") endDate <- endDate + 1; startDate <- startDate - 1
+  # if(dataType!="bar") {endDate <- endDate + 1; startDate <- startDate - 1}
 
   if(endDate<startDate) {
 
