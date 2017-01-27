@@ -95,14 +95,12 @@ trade <- function (dateRange,symbol){
   meta<-getData(dateRange,symbol,"trade")
   meta[,5]<-as.numeric(meta[,5])
 
-  meta[,2]<-as.POSIXct(strftime(sub("T"," ",strtrim(meta[,2],width = 19)),"%Y-%m-%d %H:%M:%S",tz = "UTC"),tz = "UTC")
-  tableIndex<-table(meta[,2])
+  timeStamp <- as.POSIXct(meta[,2]) + meta[,3]/1e9
 
-  tableDuration<-sapply(tableIndex,function(x)cumsum(rep(1000/x,x))-1000/x)
+  meta[,2] <- timeStamp
+  meta <- meta[,-3]
 
-  meta[,2]<-as.POSIXct((as.numeric(meta[,2])*1000+unlist(tableDuration))/1000,origin="1970-01-01 00:00:00",tz = "UTC")
-
-  # closeAllConnections()
+  closeAllConnections()
   return(meta)
 }
 
