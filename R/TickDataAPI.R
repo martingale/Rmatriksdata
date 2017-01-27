@@ -225,10 +225,10 @@ openinterest <- function (dateRange,symbol){
 bar <- function (dateRange,symbol,period){
   meta<-getData(dateRange,symbol,"bar",period)
   if(period=="1day")
-{
+  {
     date <- as.Date(meta$date)
-} else{
-    date <- as.POSIXlt(meta$time/1000,tz = "GMT",origin = "1970-01-01")
+  } else{
+    date <- as.POSIXlt(meta$time/1000,origin = "1970-01-01")
   }
   meta <- meta[-c(1:2)]
   meta <- cbind(date,meta)
