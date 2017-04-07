@@ -32,11 +32,16 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
 
   if(type=="bar"){
     path <- paste(zipbegin,startdate,enddate,zipend,period,sep="_")
-    # urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,".gz?",sep = "")
-    urlhead <- "192.168.105.100:6666?"
+    myIp <- GET("http://ipecho.net/plain")
+    if(content(myIp, as = "text") == "195.175.202.174"){
+      urlhead <- "192.168.105.100:6666?"
+    }else{
+      urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,".gz?",sep = "")
+    }
   }else{
     path <- paste(zipbegin,startdate,enddate,zipend,sep="_")
     urlhead <- paste("https://apitest.matriksdata.com/dumrul/v1/tick/",type,"?",sep = "")
+    # urlhead <- paste("192.168.105.100:6667",type,"?",sep = "")
   }
 
   start <- paste("start=",startdate,sep="")
@@ -54,6 +59,7 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
   counter <- 1
   while(T){
     req <- GET(mainurl, add_headers(Authorize = paste("jwt",auth)))
+    cat(req$status_code,"\n")
     if(req$status_code == 200){
       break
     }else{
