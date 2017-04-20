@@ -6,6 +6,7 @@
 #' @export
 #' @import base64enc
 getToken<-function(){
+
   authCond <- F
   while(!authCond){
     dir.create("~/matriks",showWarnings = F)
