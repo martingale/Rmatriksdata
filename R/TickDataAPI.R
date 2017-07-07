@@ -59,11 +59,12 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
   counter <- 1
   while(T){
     req <- GET(mainurl, add_headers(Authorize = paste("jwt",auth)))
-    cat(req$status_code,"\n")
+    # cat(req$status_code,"\n")
     if(req$status_code == 200){
       break
     }else{
       if(counter >= attemptCount){
+        cat(mainurl, "\n")
         stop("Maximum number of attempts reached!")
       }
       if(req$status_code == 401){
