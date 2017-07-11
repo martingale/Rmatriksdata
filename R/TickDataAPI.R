@@ -40,7 +40,7 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
     }
   }else{
     path <- paste(zipbegin,startdate,enddate,zipend,sep="_")
-    urlhead <- paste("https://apitest.matriksdata.com/dumrul/v1/tick/",type,"?",sep = "")
+    urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,"?",sep = "")
     # urlhead <- paste("192.168.105.100:6667",type,"?",sep = "")
   }
 
