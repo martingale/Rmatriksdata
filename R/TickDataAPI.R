@@ -59,11 +59,8 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
   counter <- 1
   while(T){
     cat(mainurl)
-    req <- try(GET(mainurl, add_headers(Authorize = paste("jwt",auth))))
+    req <- tryCatch(GET(mainurl, add_headers(Authorize = paste("jwt",auth))), error = function(e) next)
     # cat(req$status_code,"\n")
-    if(grep("Error", req)!=0){
-      next
-    }
     if(req$status_code == 200){
       break
     }else{

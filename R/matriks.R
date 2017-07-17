@@ -97,7 +97,7 @@ matriksData<-function(ticker, dataType = c("trade", "bestbidoffer", "depth", "op
   }
   dateRange <- c(startDate,endDate)
   if(!(endDate - startDate) < 1){ # 7
-    dateRange<-seq(startDate,endDate,by="weeks") # weeks
+    dateRange<-seq.Date(startDate,endDate,by="2 weeks") # weeks
     if(!dateRange[length(dateRange)] == endDate){
       dateRange <- c(dateRange,endDate)
     }
