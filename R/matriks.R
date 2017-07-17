@@ -92,13 +92,13 @@ matriksData<-function(ticker, dataType = c("trade", "bestbidoffer", "depth", "op
 
     tempDate <- startDate
     startDate <- endDate
-    endDate<-tempDate
+    endDate <- tempDate
     warning("endDate and startDate values are swapped because endDate is earlier than startDate")
   }
   dateRange <- c(startDate,endDate)
-  if(!(endDate-startDate)<1){ # 7
+  if(!(endDate - startDate) < 1){ # 7
     dateRange<-seq(startDate,endDate,by="weeks") # weeks
-    if(!dateRange[length(dateRange)]==endDate){
+    if(!dateRange[length(dateRange)] == endDate){
       dateRange <- c(dateRange,endDate)
     }
   }
