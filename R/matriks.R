@@ -112,10 +112,11 @@ matriksData<-function(ticker, dataType = c("trade", "bestbidoffer", "depth", "op
     }
     return(temp)
   })
-  tmp<-do.call(rbind,tmp)
+  tmp <- do.call(rbind,tmp)
   # try(saveRDS(tmp,file = paste(symbol,".rds",sep = "")))
-
-  if(nrow(tmp)==0) {
+  if(is.null(tmp)){
+    warning("The time range of the data may be public holiday and/or it may be future dates and/or there is no Matriks data available corresponding to time range chosen.")
+  }else if(nrow(tmp)==0) {
     warning("The time range of the data may be public holiday and/or it may be future dates and/or there is no Matriks data available corresponding to time range chosen.")
   }
   tmp

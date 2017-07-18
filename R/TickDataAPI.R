@@ -74,6 +74,8 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
         stop("Bad Request")
       }else if(req$status_code == 503){
         stop("Service Unavailable")
+      }else if(req$status_code == 404){
+        return(NULL)
       }
 
       counter <- counter + 1
@@ -231,7 +233,10 @@ openinterest <- function (dateRange,symbol){
 #' @return A data frame object is returned that contains open,high,low,close,quantity and weighted average price columns.
 #' @seealso \code{\link{trade}}, \code{\link{bestbidoffer}}, \code{\link{depth}}, \code{\link{openinterest}}.
 bar <- function (dateRange,symbol,period){
-  meta<-getData(dateRange,symbol,"bar",period)
+  meta <- getData(dateRange,symbol,"bar",period)
+  if(is.null(meta)){
+    return(NULL)
+  }
   if(period=="1day")
   {
     date <- as.Date(meta$date)
