@@ -85,6 +85,8 @@ getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
         stop("Service Unavailable")
       }else if(req$status_code == 404){
         return(NULL)
+      }else{
+        warning(req$status_code)
       }
 
       counter <- counter + 1
