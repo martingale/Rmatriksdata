@@ -86,7 +86,7 @@ getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
       }else if(req$status_code == 404){
         return(NULL)
       }else{
-        warning(req$status_code)
+        cat(req$status_code, "\n")
       }
 
       counter <- counter + 1
