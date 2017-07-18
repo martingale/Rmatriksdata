@@ -14,6 +14,13 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
   auth<-suppressWarnings(tryCatch(strsplit(readBin("~/matriks/.tkn","character"),",")[[1]][2],
                                   error=function(e) {auth<-getToken()}))
 
+  ping <- function(x, stderr = FALSE, stdout = FALSE, ...){
+    pingvec <- system2("ping", x,
+                       stderr = FALSE,
+                       stdout = FALSE,...)
+    if (pingvec == 0) TRUE else FALSE
+  }
+
   discoSeviceURL <- "api.matriksdata.com/disco.json"
 
   # disco <- fromJSON(content(GET(discoSeviceURL),as = "text"))
@@ -32,8 +39,8 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
 
   if(type=="bar"){
     path <- paste(zipbegin,startdate,enddate,zipend,period,sep="_")
-    myIp <- GET("http://ipecho.net/plain")
-    if(content(myIp, as = "text") == "195.175.202.174"){
+    myIp <- ping("192.168.105.100")
+    if(myIp){
       urlhead <- "192.168.105.100:6666?"
     }else{
       urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,".gz?",sep = "")
