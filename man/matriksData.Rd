@@ -5,7 +5,8 @@
 \title{matriksData}
 \usage{
 matriksData(ticker, dataType = c("trade", "bestbidoffer", "depth",
-  "openinterest", "bar"), startDate, endDate = Sys.Date(), period = NULL)
+  "openinterest", "bar"), startDate, endDate = Sys.Date(), period = NULL,
+  isLocal = NULL)
 }
 \arguments{
 \item{ticker}{A character variable for ticker symbol.}

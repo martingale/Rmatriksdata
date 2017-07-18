@@ -10,7 +10,7 @@
 #' @seealso \code{\link{trade}}, \code{\link{bestbidoffer}}, \code{\link{depth}}, \code{\link{openinterest}}, \code{\link{bar}}
 #' @import httr
 #' @importFrom jsonlite fromJSON
-getData<-function(dateRange,symbol,type,period=NULL,...){
+getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
   auth<-suppressWarnings(tryCatch(strsplit(readBin("~/matriks/.tkn","character"),",")[[1]][2],
                                   error=function(e) {auth<-getToken()}))
 
@@ -39,8 +39,10 @@ getData<-function(dateRange,symbol,type,period=NULL,...){
 
   if(type=="bar"){
     path <- paste(zipbegin,startdate,enddate,zipend,period,sep="_")
-    myIp <- ping("192.168.105.100")
-    if(myIp){
+    if(is.null(isLocal)){
+      isLocal <- F
+    }
+    if(isLocal){
       urlhead <- "192.168.105.100:6666?"
     }else{
       urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,".gz?",sep = "")
@@ -239,8 +241,8 @@ openinterest <- function (dateRange,symbol){
 #' @param period A character value is used with bar datatype to analyze data in different time segments.One of "\code{1min}","\code{5min}","\code{1hour}" and "\code{1day}".
 #' @return A data frame object is returned that contains open,high,low,close,quantity and weighted average price columns.
 #' @seealso \code{\link{trade}}, \code{\link{bestbidoffer}}, \code{\link{depth}}, \code{\link{openinterest}}.
-bar <- function (dateRange,symbol,period){
-  meta <- getData(dateRange,symbol,"bar",period)
+bar <- function (dateRange, symbol, period, isLocal){
+  meta <- getData(dateRange, symbol, "bar", period, isLocal)
   if(is.null(meta)){
     return(NULL)
   }

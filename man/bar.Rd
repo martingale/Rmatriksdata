@@ -4,7 +4,7 @@
 \alias{bar}
 \title{Fetch Bar Data}
 \usage{
-bar(dateRange, symbol, period)
+bar(dateRange, symbol, period, isLocal)
 }
 \arguments{
 \item{dateRange}{A character vector of length two \code{c("YYYY-MM-DD","YYYY-MM-DD")}.}

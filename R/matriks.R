@@ -73,7 +73,7 @@ getToken<-function(){
 #' # matriksData("GARAN","trade","2016-01-22","2016-01-23")
 #' ##NOT RUN
 #' @export
-matriksData<-function(ticker, dataType = c("trade", "bestbidoffer", "depth", "openinterest", "bar"), startDate, endDate=Sys.Date(), period=NULL) {
+matriksData<-function(ticker, dataType = c("trade", "bestbidoffer", "depth", "openinterest", "bar"), startDate, endDate=Sys.Date(), period=NULL, isLocal=NULL) {
   if(length(dataType) != 1) stop("Invalid dataType length")
   dataType <- match.arg(dataType)
   if(is.null(endDate)){
@@ -106,7 +106,7 @@ matriksData<-function(ticker, dataType = c("trade", "bestbidoffer", "depth", "op
 
   tmp<-lapply(1:(length(dateRange)-1),FUN = function(x){
     if(dataType=="bar"){
-      temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1]),symbol = ticker,period=period))
+      temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1]),symbol = ticker,period=period, isLocal = isLocal))
     }else{
       temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1]),symbol = ticker))
     }

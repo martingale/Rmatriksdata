@@ -4,7 +4,7 @@
 \alias{getData}
 \title{Fetch Data}
 \usage{
-getData(dateRange, symbol, type, period = NULL, ...)
+getData(dateRange, symbol, type, period = NULL, isLocal = NULL)
 }
 \arguments{
 \item{dateRange}{A character vector of length two \code{c("YYYY-MM-DD","YYYY-MM-DD")}.}
