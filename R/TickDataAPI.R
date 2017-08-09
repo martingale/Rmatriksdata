@@ -71,6 +71,7 @@ getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
     req <- try(GET(mainurl, add_headers(Authorize = paste("jwt",auth))))
     if(grep("Error", req)){
       warning(req)
+      next
     }
     # cat(req$status_code,"\n")
     if(req$status_code == 200){
