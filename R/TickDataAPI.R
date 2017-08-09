@@ -69,7 +69,7 @@ getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
   while(T){
     #cat(mainurl, "\n")
     req <- try(GET(mainurl, add_headers(Authorize = paste("jwt",auth))))
-    if(grep("Error", req)){
+    if(class(req) != "response"){
       warning(req)
       next
     }
