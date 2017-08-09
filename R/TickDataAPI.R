@@ -67,7 +67,7 @@ getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
 
   counter <- 1
   while(T){
-    cat(mainurl, "\n")
+    #cat(mainurl, "\n")
     req <- tryCatch(GET(mainurl, add_headers(Authorize = paste("jwt",auth))), error = function(e) {cat("Error\n");next})
     # cat(req$status_code,"\n")
     if(req$status_code == 200){
@@ -75,7 +75,7 @@ getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
     }else{
       if(counter >= attemptCount){
         cat(mainurl, "\n")
-        stop("Maximum number of attempts reached!")
+        stop(paste(req$status_code, "Maximum number of attempts reached!"))
       }
       if(req$status_code == 401){
         auth<-getToken()
