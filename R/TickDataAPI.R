@@ -84,7 +84,8 @@ getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
       }else if(req$status_code == 503){
         stop("Service Unavailable")
       }else if(req$status_code == 404){
-        return(NULL)
+        warning("Data unavaiable")
+        return(NA)
       }else{
         cat(req$status_code, "\n")
       }
@@ -135,6 +136,7 @@ trade <- function (dateRange,symbol){
 #' @seealso  \code{\link{trade}}, \code{\link{depth}}, \code{\link{openinterest}}, \code{\link{bar}}.
 bestbidoffer <- function (dateRange,symbol){
   meta<-getData(dateRange,symbol,"bestbidoffer")
+  if(all(is.na(meta))) return(NA)
   meta[,1]<-as.character(meta[,1])
   meta[,2]<-as.character(meta[,2])
   meta[,3]<-as.numeric(as.character(meta[,3]))
@@ -143,7 +145,7 @@ bestbidoffer <- function (dateRange,symbol){
   meta[,6]<-as.numeric(meta[,6])
   meta[,7]<-as.numeric(meta[,7])
 
-  timeStamp <- as.POSIXct(meta[,2]) + meta[,3]/1e9
+  timeStamp <- try(as.POSIXct(meta[,2]) + meta[,3]/1e9)
 
   meta[,2] <- timeStamp
   meta <- meta[,-3]
@@ -164,7 +166,7 @@ bestbidoffer <- function (dateRange,symbol){
 #' @seealso  \code{\link{trade}}, \code{\link{bestbidoffer}}, \code{\link{openinterest}}, \code{\link{bar}}.
 depth <- function (dateRange,symbol){
   meta<-getData(dateRange,symbol,"depth")
-
+  if(all(is.na(meta))) return(NA)
   meta[,7]<-as.numeric(meta[,7])
 
   meta[,2]<-as.POSIXct(strftime(sub("T"," ",strtrim(meta[,2],width = 19)),"%Y-%m-%d %H:%M:%S",tz = "GMT"),tz = "GMT")
@@ -245,9 +247,7 @@ openinterest <- function (dateRange,symbol){
 #' @seealso \code{\link{trade}}, \code{\link{bestbidoffer}}, \code{\link{depth}}, \code{\link{openinterest}}.
 bar <- function (dateRange, symbol, period, isLocal){
   meta <- getData(dateRange, symbol, "bar", period, isLocal)
-  if(is.null(meta)){
-    return(NULL)
-  }
+  if(all(is.na(meta))) return(NA)
   if(period=="1day")
   {
     date <- as.Date(meta$date)
