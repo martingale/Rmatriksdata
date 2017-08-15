@@ -73,11 +73,11 @@ getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
       warning(req)
       next
     }
+    write.table(paste(Sys.time(),",",mainurl,",",req$status_code),"log.txt",append = T,row.names = F, col.names = F)
     # cat(req$status_code,"\n")
     if(req$status_code == 200){
       break
     }else{
-      write.table(paste(Sys.time(),",",mainurl,",",req$status_code),"log.txt",append = T,row.names = F, col.names = F)
       if(counter >= attemptCount){
         cat(mainurl, "\n")
         stop(paste(req$status_code, "Maximum number of attempts reached!"))
