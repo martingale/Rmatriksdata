@@ -77,6 +77,7 @@ getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
     if(req$status_code == 200){
       break
     }else{
+      write.table(paste(Sys.time(),",",mainurl,",",req$status_code),"log.txt",append = T,row.names = F, col.names = F)
       if(counter >= attemptCount){
         cat(mainurl, "\n")
         stop(paste(req$status_code, "Maximum number of attempts reached!"))
@@ -84,11 +85,11 @@ getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
       if(req$status_code == 401){
         auth<-getToken()
       }else if(req$status_code == 400){
-        stop("Bad Request")
+        stop("Bad Request. Err 400")
       }else if(req$status_code == 503){
-        stop("Service Unavailable")
+        stop("Service Unavailable. Err 503")
       }else if(req$status_code == 404){
-        warning("Data unavaiable")
+        warning("Data unavaiable. Err 404")
         return(NA)
       }else{
         cat(req$status_code, "\n")
