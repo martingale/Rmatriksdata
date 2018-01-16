@@ -85,7 +85,7 @@ matriksData<-function(ticker, dataType = c("trade", "bestbidoffer", "depth", "op
     }
   }
   startDate <- as.Date(startDate)
-  endDate <- as.Date(endDate)
+  endDate <- as.Date(endDate) + 1
   # if(dataType!="bar") {endDate <- endDate + 1; startDate <- startDate - 1}
 
   if(endDate<startDate) {
@@ -97,18 +97,18 @@ matriksData<-function(ticker, dataType = c("trade", "bestbidoffer", "depth", "op
   }
   dateRange <- c(startDate,endDate)
   if(!(endDate - startDate) < 1){ # 7
-    dateRange<-seq.Date(startDate,endDate,by="2 weeks") # weeks
+    dateRange<-seq.Date(startDate,endDate,by="13 days") # weeks
     if(!dateRange[length(dateRange)] == endDate){
-      dateRange <- c(dateRange,endDate)
+      dateRange <- c(dateRange, endDate)
     }
   }
 
 
   tmp<-lapply(1:(length(dateRange)-1),FUN = function(x){
     if(dataType=="bar"){
-      temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1]),symbol = ticker,period=period, isLocal = isLocal))
+      temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1] - 1),symbol = ticker,period=period, isLocal = isLocal))
     }else{
-      temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1]),symbol = ticker))
+      temp<-do.call(dataType,list(dateRange=c(dateRange[x],dateRange[x+1] - 1),symbol = ticker))
     }
     return(temp)
   })

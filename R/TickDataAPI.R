@@ -11,6 +11,7 @@
 #' @import httr
 #' @importFrom jsonlite fromJSON
 getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
+  require(httr)
   auth<-suppressWarnings(tryCatch(strsplit(readBin("~/matriks/.tkn","character"),",")[[1]][2],
                                   error=function(e) {auth<-getToken()}))
 
@@ -43,7 +44,7 @@ getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
       isLocal <- F
     }
     if(isLocal){
-      urlhead <- "192.168.105.100:6666?"
+      urlhead <- "192.168.105.110:6666?"
     }else{
       urlhead <- paste("https://api.matriksdata.com/dumrul/v1/tick/",type,".gz?",sep = "")
     }
@@ -67,7 +68,7 @@ getData<-function(dateRange,symbol,type,period=NULL,isLocal=NULL){
 
   counter <- 1
   while(T){
-    #cat(mainurl, "\n")
+    cat(mainurl, "\n")
     req <- try(GET(mainurl, add_headers(Authorize = paste("jwt",auth))))
     if(class(req) != "response"){
       warning(req)
