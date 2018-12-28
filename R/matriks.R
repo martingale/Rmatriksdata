@@ -12,14 +12,20 @@ getToken<-function(){
     dir.create("~/matriks",showWarnings = F)
     if(file.exists("~/matriks/.tkn")){
       up <- readBin("~/matriks/.tkn","character")
-      up <- strsplit(up,",")[[1]][1]
+      tmp <- strsplit(up,",")[[1]]
+      up <- tmp[1]
+      account_type <- tmp[3]
     }else{
       username <- readline("Username:")
       pass <- readline("Password:")
+      account_type <- readline("Account Type:")
+      if(length(account_type) != 1){
+        print("Account type must be one character!")
+      }
       up <- base64encode(charToRaw(paste(username,pass,sep = ":")))
       print(paste("encoded user-pass:", up))
     }
-    reqH <- add_headers(Authorize = paste("Basic",up), dummy = "D")
+    reqH <- add_headers(Authorize = paste("Basic",up), dummy = account_type)
     names(reqH$headers)[2] <- "X-Client-Type"
     req <- GET("http://api.matriksdata.com/login", reqH)
     if(req$status_code==401){
@@ -36,7 +42,7 @@ getToken<-function(){
       token <- token[nchar(token)==max(nchar(token))]
     }
   }
-  writeBin(paste(up,token,sep = ","),"~/matriks/.tkn")
+  writeBin(paste(up,token,account_type,sep = ","),"~/matriks/.tkn")
   closeAllConnections()
   cat(paste("Token:",token))
   token
