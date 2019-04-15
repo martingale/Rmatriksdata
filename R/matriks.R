@@ -5,12 +5,12 @@
 #' @return The  token is returned.
 #' @export
 #' @import base64enc
-getToken<-function(){
+getToken<-function(reset=F){
 
   authCond <- F
   while(!authCond){
     dir.create("~/matriks",showWarnings = F)
-    if(file.exists("~/matriks/.tkn")){
+    if(file.exists("~/matriks/.tkn") & !reset){
       up <- readBin("~/matriks/.tkn","character")
       tmp <- strsplit(up,",")[[1]]
       up <- tmp[1]
